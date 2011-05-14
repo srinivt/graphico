@@ -1,0 +1,3 @@
+module Graphico
+  # Your code goes here...
+end
