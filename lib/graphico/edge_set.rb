@@ -25,6 +25,10 @@ module Graphico
       @graph
     end
     
+    def each(&block)
+      @set.each { |e| yield(e) }
+    end
+    
     def exists?(a, b)
       @set.any? { |e| e.end_points == [a, b] }
     end

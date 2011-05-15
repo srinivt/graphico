@@ -2,6 +2,8 @@ module Graphico
   class InvalidArgumentError < RuntimeError; end
   
   class Graph
+    include DotExportable
+    
     attr_accessor :directed, :allow_dup_edges # :nodes and :edges should be private
     attr_reader :nodes, :edges
     
@@ -55,6 +57,6 @@ module Graphico
     
     def edge?(a, b)
       directed? ? @edges.exists?(a, b) : (@edges.exists?(a, b) or @edges.exists?(b, a))
-    end
+    end    
   end
 end

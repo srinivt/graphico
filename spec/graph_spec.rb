@@ -130,6 +130,48 @@ describe "Graph" do
     @g.edges.size.should == 0
   end
   
+  it "should iterate over the edges" do
+    @g.nodes = [@a, @b, @c]; @g.edges = [[@a, @b], [@b, @c]]
+    i = 0
+    
+    @g.edges.each { |e| i += 1 }
+    i.should == 2
+  end
+  
+  context "dot_export" do
+    before(:each) do 
+      `rm *.jpg *.dot`
+    end
+    
+    it "should export a graph to a dot" do
+      File.exists?('spec_graph.dot').should == false
+      File.exists?('spec_graph.jpg').should == false
+      
+      @g.allow_dup_edges = true
+      @g.nodes = [@a, @b, @c]; @g.edges = [[@a, @b], [@b, @c], [@b, @c]]
+      @g.to_jpeg('spec_graph')
+      
+      File.exists?('spec_graph.dot').should == true
+      File.exists?('spec_graph.jpg').should == true
+    end
+  
+    it "should export a directed graph to a dot" do
+      File.exists?('spec_digraph.dot').should == false
+      File.exists?('spec_digraph.jpg').should == false
+      
+      @g.allow_dup_edges = true; @g.directed = true
+      @g.nodes = [@a, @b, @c]; @g.edges = [[@a, @b], [@b, @c], [@b, @c]]
+      @g.to_jpeg('spec_digraph')
+      
+      File.exists?('spec_digraph.dot').should == true
+      File.exists?('spec_digraph.jpg').should == true
+    end
+  end
+
+  it "should create weighted graph"
+  
+  it "should delete corresponding edges on deleting a node"
+  
   it "should return incident edges on a node on an undirected graph"
   
   it "should return incident edges on a node on a directed graph"
@@ -139,11 +181,6 @@ describe "Graph" do
   it "should return in-degree of a node in an directed graph" 
   
   it "should return out-degree of a node in an directed graph"
-
-  it "should export a graph to a dot"
-
-  it "should create weighted graph"
   
-  it "should delete corresponding edges on deleting a node"
 end
 
