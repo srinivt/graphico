@@ -2,9 +2,9 @@ module Graphico
   class Edge
     attr_accessor :head, :tail
     
-    def initialize(f, t)
-      @head = f
-      @tail = t
+    def initialize(from, to)
+      @head = from
+      @tail = to
     end
     
     def end_points
