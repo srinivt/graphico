@@ -5,7 +5,7 @@ module DotExportable
   end
   
   def header
-    (self.directed? ? "di" : '') + "graph graphico_graph {\n"
+    "#{"di" if directed?}graph graphico_graph {\n"
   end
   
   def tail
@@ -13,22 +13,20 @@ module DotExportable
   end
   
   def export_nodes
-    nodes_dot = ''
-    self.nodes.each do |n|
-      nodes_dot += <<-NODE
+    nodes.inject('') do |s, n|
+      s + <<-NODE
       #{n.label} [
           fontsize = 12,
           label = #{n.label}
       ]\n
       NODE
     end
-    nodes_dot
   end
   
   def export_edges
     edges_dot = ''
-    sep = self.directed? ? '->' : '--'
-    self.edges.each do |e|
+    sep = directed? ? '->' : '--'
+    edges.each do |e|
       edges_dot << "#{e.head.label} #{sep} #{e.tail.label}\n"
     end
     edges_dot
